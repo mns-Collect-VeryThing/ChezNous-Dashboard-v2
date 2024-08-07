@@ -1,18 +1,18 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setPageTitle } from '../../features/common/headerSlice'
-import Transactions from '../../features/transactions'
+import Clients from '../../features/clients'
 
 function InternalPage(){
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setPageTitle({ title : "Transactions"}))
+        dispatch(setPageTitle({ title : "Clients"}))
       }, [])
 
 
     return(
-        <Transactions />
+        <Clients />
     )
 }
 

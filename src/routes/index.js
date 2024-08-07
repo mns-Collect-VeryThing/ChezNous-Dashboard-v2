@@ -7,16 +7,17 @@ const Welcome = lazy(() => import('../pages/protected/Welcome'))
 const Page404 = lazy(() => import('../pages/protected/404'))
 const Blank = lazy(() => import('../pages/protected/Blank'))
 const Charts = lazy(() => import('../pages/protected/Charts'))
-const Leads = lazy(() => import('../pages/protected/Leads'))
+const Leads = lazy(() => import('../pages/protected/Clients'))
 const Integration = lazy(() => import('../pages/protected/Integration'))
 const Calendar = lazy(() => import('../pages/protected/Calendar'))
 const Team = lazy(() => import('../pages/protected/Team'))
-const Transactions = lazy(() => import('../pages/protected/Transactions'))
+const Transactions = lazy(() => import('../pages/protected/Commandes'))
 const Bills = lazy(() => import('../pages/protected/Bills'))
 const ProfileSettings = lazy(() => import('../pages/protected/ProfileSettings'))
 const GettingStarted = lazy(() => import('../pages/GettingStarted'))
 const DocFeatures = lazy(() => import('../pages/DocFeatures'))
 const DocComponents = lazy(() => import('../pages/DocComponents'))
+const Products = lazy(() => import('../pages/protected/Products'))
 
 
 const routes = [
@@ -29,7 +30,11 @@ const routes = [
     component: Welcome, // view rendered
   },
   {
-    path: '/leads',
+    path: '/products', // the url
+    component: Products, // view rendered
+  },
+  {
+    path: '/clients',
     component: Leads,
   },
   {
@@ -41,7 +46,7 @@ const routes = [
     component: Calendar,
   },
   {
-    path: '/transactions',
+    path: '/commandes',
     component: Transactions,
   },
   {

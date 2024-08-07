@@ -2,8 +2,11 @@ import { useEffect } from 'react'
 import { MODAL_BODY_TYPES } from '../utils/globalConstantUtil'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../features/common/modalSlice'
-import AddLeadModalBody from '../features/leads/components/AddLeadModalBody'
+import AddLeadModalBody from '../features/clients/components/AddLeadModalBody'
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody'
+import OrderModalBody from "../features/common/components/OrderModalBody";
+import AddProductModalBody from "../features/products/components/AddProductModalBody";
+import UpdateProductModalBody from "../features/products/components/UpdateProductModalBody";
 
 
 function ModalLayout(){
@@ -29,11 +32,13 @@ function ModalLayout(){
                 <h3 className="font-semibold text-2xl pb-6 text-center">{title}</h3>
 
 
-                {/* Loading modal body according to different modal type */}
                 {
                     {
                              [MODAL_BODY_TYPES.LEAD_ADD_NEW] : <AddLeadModalBody closeModal={close} extraObject={extraObject}/>,
+                             [MODAL_BODY_TYPES.PRODUCT_ADD] : <AddProductModalBody closeModal={close} extraObject={extraObject}/>,
+                             [MODAL_BODY_TYPES.PRODUCT_UPDATE] : <UpdateProductModalBody closeModal={close} extraObject={extraObject}/>,
                              [MODAL_BODY_TYPES.CONFIRMATION] : <ConfirmationModalBody extraObject={extraObject} closeModal={close}/>,
+                             [MODAL_BODY_TYPES.ORDER] : <OrderModalBody extraObject={extraObject} closeModal={close} />,
                              [MODAL_BODY_TYPES.DEFAULT] : <div></div>
                     }[bodyType]
                 }

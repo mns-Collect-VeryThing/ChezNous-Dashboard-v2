@@ -7,6 +7,10 @@ import { RECENT_TRANSACTIONS } from "../../utils/dummyData"
 import FunnelIcon from '@heroicons/react/24/outline/FunnelIcon'
 import XMarkIcon from '@heroicons/react/24/outline/XMarkIcon'
 import SearchBar from "../../components/Input/SearchBar"
+import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
+import {EyeIcon} from "@heroicons/react/20/solid";
+import {openModal} from "../common/modalSlice";
+import {CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES} from "../../utils/globalConstantUtil";
 
 const TopSideButtons = ({removeFilter, applyFilter, applySearch}) => {
 
@@ -54,7 +58,7 @@ const TopSideButtons = ({removeFilter, applyFilter, applySearch}) => {
 }
 
 
-function Transactions(){
+function Commandes(){
 
 
     const [trans, setTrans] = useState(RECENT_TRANSACTIONS)
@@ -74,10 +78,23 @@ function Transactions(){
         setTrans(filteredTransactions)
     }
 
+    const getDummyStatus = (index) => {
+        if(index % 5 === 0)return <div className="badge">Terminé</div>
+        else if(index % 5 === 1)return <div className="badge badge-primary">Expedié</div>
+        else return <div className="badge badge-secondary">A traiter</div>
+    }
+
+    const dispatch = useDispatch()
+
+
+    const openOrderModal = (index) => {
+        dispatch(openModal({title : "Détails", bodyType : MODAL_BODY_TYPES.ORDER, extraObject : {orderId: index}}))
+    }
+
     return(
         <>
             
-            <TitleCard title="Recent Transactions" topMargin="mt-2" TopSideButtons={<TopSideButtons applySearch={applySearch} applyFilter={applyFilter} removeFilter={removeFilter}/>}>
+            <TitleCard title="Vos commandes" topMargin="mt-2" TopSideButtons={<TopSideButtons applySearch={applySearch} applyFilter={applyFilter} removeFilter={removeFilter}/>}>
 
                 {/* Team Member list in table format loaded constant */}
             <div className="overflow-x-auto w-full">
@@ -86,9 +103,10 @@ function Transactions(){
                     <tr>
                         <th>Name</th>
                         <th>Email Id</th>
-                        <th>Location</th>
-                        <th>Amount</th>
-                        <th>Transaction Date</th>
+                        <th>Montant</th>
+                        <th>Nombre de produit</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -96,22 +114,16 @@ function Transactions(){
                             trans.map((l, k) => {
                                 return(
                                     <tr key={k}>
-                                    <td>
-                                        <div className="flex items-center space-x-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-circle w-12 h-12">
-                                                    <img src={l.avatar} alt="Avatar" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">{l.name}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>{l.email}</td>
-                                    <td>{l.location}</td>
-                                    <td>${l.amount}</td>
-                                    <td>{moment(l.date).format("D MMM")}</td>
+                                        <td>{l.name}</td>
+                                        <td>{l.email}</td>
+                                        <td>${l.amount}</td>
+                                        <td>{k % 5 + 1}</td>
+                                        <td>{getDummyStatus(k)}</td>
+                                        <td>
+                                            <button className="btn btn-square btn-ghost"
+                                                    onClick={() => openOrderModal(k)}><EyeIcon className="w-5"/>
+                                            </button>
+                                        </td>
                                     </tr>
                                 )
                             })
@@ -125,4 +137,4 @@ function Transactions(){
 }
 
 
-export default Transactions
+export default Commandes

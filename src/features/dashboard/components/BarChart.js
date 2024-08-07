@@ -33,11 +33,6 @@ function BarChart(){
             data: labels.map(() => { return Math.random() * 1000 + 500 }),
             backgroundColor: 'rgba(255, 99, 132, 1)',
           },
-          {
-            label: 'Store 2',
-            data: labels.map(() => { return Math.random() * 1000 + 500 }),
-            backgroundColor: 'rgba(53, 162, 235, 1)',
-          },
         ],
       };
 
