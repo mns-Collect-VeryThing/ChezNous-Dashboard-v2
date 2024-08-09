@@ -6,7 +6,6 @@ import AddLeadModalBody from '../features/clients/components/AddLeadModalBody'
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody'
 import OrderModalBody from "../features/common/components/OrderModalBody";
 import AddProductModalBody from "../features/products/components/AddProductModalBody";
-import UpdateProductModalBody from "../features/products/components/UpdateProductModalBody";
 
 
 function ModalLayout(){
@@ -36,7 +35,6 @@ function ModalLayout(){
                     {
                              [MODAL_BODY_TYPES.LEAD_ADD_NEW] : <AddLeadModalBody closeModal={close} extraObject={extraObject}/>,
                              [MODAL_BODY_TYPES.PRODUCT_ADD] : <AddProductModalBody closeModal={close} extraObject={extraObject}/>,
-                             [MODAL_BODY_TYPES.PRODUCT_UPDATE] : <UpdateProductModalBody closeModal={close} extraObject={extraObject}/>,
                              [MODAL_BODY_TYPES.CONFIRMATION] : <ConfirmationModalBody extraObject={extraObject} closeModal={close}/>,
                              [MODAL_BODY_TYPES.ORDER] : <OrderModalBody extraObject={extraObject} closeModal={close} />,
                              [MODAL_BODY_TYPES.DEFAULT] : <div></div>
