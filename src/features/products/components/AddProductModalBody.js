@@ -10,8 +10,8 @@ import {addProduct, getProduct, getProducts, updateProduct} from "../../../servi
 function AddProductModalBody({closeModal, extraObject}){
     const { register, formState: { errors }, handleSubmit, reset } = useForm({
         defaultValues: {
-            nom: '',
-            prix: '',
+            name: '',
+            price: '',
             quantity: '',
             id: '',
         },
@@ -65,16 +65,16 @@ function AddProductModalBody({closeModal, extraObject}){
                         <span className="label-text">Produit</span>
                     </div>
                     <input className="input input-bordered w-full"
-                           {...register("nom", {required: true})}/><br/>
-                        {errors.Nom && <span>Ce champs est requis</span>}
+                           {...register("name", {required: true})}/><br/>
+                        {errors.name && <span>Ce champs est requis</span>}
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Prix</span>
+                        <span className="label-text">price</span>
                     </div>
                     <input className="input input-bordered w-full max-w-xs"
-                           {...register("prix", {required: true})}/><br/>
-                    {errors.prix && <span>Ce champs est requis</span>}
+                           {...register("price", {required: true})}/><br/>
+                    {errors.price && <span>Ce champs est requis</span>}
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <div className="label">

@@ -89,8 +89,8 @@ function Products(){
                             products.map((l, k) => {
                                 return(
                                     <tr key={k}>
-                                        <td>{l.nom}</td>
-                                        <td>${l.prix}</td>
+                                        <td>{l.name}</td>
+                                        <td>${l.price}</td>
                                         <td>{l.quantity}</td>
                                         <td>{getStock(l.quantity)}</td>
                                         <td>
