@@ -3,30 +3,42 @@ import {Link} from 'react-router-dom'
 import LandingIntro from './LandingIntro'
 import ErrorText from  '../../components/Typography/ErrorText'
 import InputText from '../../components/Input/InputText'
+import {getShopByUser, postLogin} from "../../service/userService";
+import {jwtDecode} from "jwt-decode";
 
 function Login(){
 
     const INITIAL_LOGIN_OBJ = {
         password : "",
-        emailId : ""
+        email : ""
     }
 
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
     const [loginObj, setLoginObj] = useState(INITIAL_LOGIN_OBJ)
 
-    const submitForm = (e) =>{
+    const submitForm = async (e) => {
         e.preventDefault()
         setErrorMessage("")
 
-        if(loginObj.emailId.trim() === "")return setErrorMessage("Email Id is required! (use any value)")
-        if(loginObj.password.trim() === "")return setErrorMessage("Password is required! (use any value)")
-        else{
+        if (loginObj.email.trim() === "") return setErrorMessage("Email Id is required! (use any value)")
+        if (loginObj.password.trim() === "") return setErrorMessage("Password is required! (use any value)")
+        else {
             setLoading(true)
-            // Call API to check user credentials and save token in localstorage
-            localStorage.setItem("token", "DumyTokenHere")
-            setLoading(false)
-            window.location.href = '/app/welcome'
+            const response = await postLogin(loginObj);
+
+            if (response.status === 200) {
+                const { token } = response.data;
+                localStorage.setItem('token', token);
+
+                const decodedToken = jwtDecode(token);
+                const shop = await getShopByUser(decodedToken.username);
+                localStorage.setItem('shopId', shop.data.id);
+                window.location.href = '/app/welcome'
+            } else {
+                setLoading(false);
+                alert('Invalid login credentials. Please try again.');
+            }
         }
     }
 
@@ -48,7 +60,7 @@ function Login(){
 
                         <div className="mb-4">
 
-                            <InputText type="emailId" defaultValue={loginObj.emailId} updateType="emailId" containerStyle="mt-4" labelTitle="Email Id" updateFormValue={updateFormValue}/>
+                            <InputText type="email" defaultValue={loginObj.email} updateType="email" containerStyle="mt-4" labelTitle="Email Id" updateFormValue={updateFormValue}/>
 
                             <InputText defaultValue={loginObj.password} type="password" updateType="password" containerStyle="mt-4" labelTitle="Password" updateFormValue={updateFormValue}/>
 

@@ -3,7 +3,7 @@ import axiosInstance from '../config/axiosConfig';
 
 const getProducts = async () => {
     try {
-        const response = await axiosInstance.get('/articles/articles');
+        const response = await axiosInstance.get('/product');
         return response.data;
     } catch (error) {
         console.error('Error fetching orders', error);

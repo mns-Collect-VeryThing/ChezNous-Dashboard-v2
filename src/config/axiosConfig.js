@@ -2,8 +2,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://localhost:7004/api/app', // Remplacez par votre base URL
-    // baseURL: 'https://66b07fc66a693a95b538edbe.mockapi.io', // Remplacez par votre base URL
+    baseURL: 'http://127.0.0.1:8000/api',
     timeout: 1000,
     headers: {'Content-Type': 'application/json'},
 });
