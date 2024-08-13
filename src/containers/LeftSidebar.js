@@ -14,6 +14,8 @@ function LeftSidebar(){
         document.getElementById('left-sidebar-drawer').click()
     }
 
+    const shopName = localStorage.getItem("shopName")
+
     return(
         <div className="drawer-side  z-30  ">
             <label htmlFor="left-sidebar-drawer" className="drawer-overlay"></label> 
@@ -24,7 +26,7 @@ function LeftSidebar(){
 
                 <li className="mb-2 font-semibold text-xl">
                     
-                    <Link to={'/app/dashboard'}><img className="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo"/>[SHOP]</Link> </li>
+                    <Link to={'/app/dashboard'}><img className="mask mask-squircle w-10" src="/logo192.png" alt="DashWind Logo"/>{shopName}</Link> </li>
                 {
                     routes.map((route, k) => {
                         return(

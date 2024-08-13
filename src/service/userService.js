@@ -9,7 +9,6 @@ const getJWT = () => {
 
 const postLogin = async (data) => {
     try {
-        console.log(data)
         return await axiosInstance.post('/login_check', data, {
             headers: {
                 'Content-Type': 'application/json',

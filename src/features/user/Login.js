@@ -33,7 +33,9 @@ function Login(){
 
                 const decodedToken = jwtDecode(token);
                 const shop = await getShopByUser(decodedToken.username);
+                console.log(shop)
                 localStorage.setItem('shopId', shop.data.id);
+                localStorage.setItem('shopName', shop.data.name);
                 window.location.href = '/app/welcome'
             } else {
                 setLoading(false);
