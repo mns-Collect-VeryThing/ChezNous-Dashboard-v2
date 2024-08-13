@@ -1,5 +1,5 @@
 import moment from "moment"
-import { useEffect } from "react"
+import {useEffect, useState} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import TitleCard from "../../components/Cards/TitleCard"
 import { openModal } from "../common/modalSlice"
@@ -8,6 +8,7 @@ import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from '../../utils/gl
 import TrashIcon from '@heroicons/react/24/outline/TrashIcon'
 import { showNotification } from '../common/headerSlice'
 import Avatar from "../../components/Avatar";
+import {getCustomerByShop} from "../../service/customerService";
 
 const TopSideButtons = () => {
 
@@ -20,7 +21,7 @@ const TopSideButtons = () => {
     return(
         <div className="inline-block float-right space-x-4">
             <button className="btn px-6 btn-sm normal-case btn-primary btn-outline" onClick={() => openAddNewLeadModal()}>Exporter</button>
-            <button className="btn px-6 btn-sm normal-case btn-primary" onClick={() => openAddNewLeadModal()}>Ajouter</button>
+            {/*<button className="btn px-6 btn-sm normal-case btn-primary" onClick={() => openAddNewLeadModal()}>Ajouter</button>*/}
         </div>
     )
 }
@@ -28,13 +29,21 @@ const TopSideButtons = () => {
 function Clients(){
 
     const {leads } = useSelector(state => state.lead)
-    const dispatch = useDispatch()
+    const [customers, setCustomers] = useState(null)
+    const dispatch = useDispatch();
+
+    const fetchCustomer = async () => {
+        const response = await getCustomerByShop({shopId : localStorage.getItem('shopId')});
+        setCustomers(response);
+    };
 
     useEffect(() => {
         dispatch(getLeadsContent())
+        fetchCustomer().then();
     }, [])
 
-    
+
+    console.log(customers);
 
     const deleteCurrentLead = (index) => {
         dispatch(openModal({title : "Confirmation", bodyType : MODAL_BODY_TYPES.CONFIRMATION,
@@ -59,13 +68,13 @@ function Clients(){
                     </thead>
                     <tbody>
                         {
-                            leads.map((l, k) => {
+                            customers?.map((l, k) => {
                                 return(
                                     <tr key={k}>
-                                    <td><Avatar initial={l.last_name[0]} size="h-20 w-20" bgColor="bg-primary" textColor="text-white" /></td>
+                                    <td><Avatar initial={l.email[0]} size="h-20 w-20" bgColor="bg-primary" textColor="text-white" /></td>
                                     <td>{l.email}</td>
                                     <td>{moment(new Date()).add(-5*(k+2), 'days').format("DD MMM YY")}</td>
-                                    <td><button className="btn btn-square btn-ghost" onClick={() => deleteCurrentLead(k)}><TrashIcon className="w-5"/></button></td>
+                                    {/*<td><button className="btn btn-square btn-ghost" onClick={() => deleteCurrentLead(k)}><TrashIcon className="w-5"/></button></td>*/}
                                     </tr>
                                 )
                             })

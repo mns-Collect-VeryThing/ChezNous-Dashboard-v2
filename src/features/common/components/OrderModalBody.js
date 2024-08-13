@@ -4,17 +4,18 @@ import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_CLOSE_TYPES } from '../../../util
 import { deleteLead } from '../../clients/leadSlice'
 import { showNotification } from '../headerSlice'
 import {useEffect} from "react";
+import {getOrdersByShop, sendOrder} from "../../../service/orderService";
 
 function OrderModalBody({ extraObject, closeModal}){
 
     const dispatch = useDispatch()
 
-    const { orderId } = extraObject
+    const { orderDetail } = extraObject
 
-    useEffect(() => {
-        console.log(orderId)
 
-    }, [orderId]);
+    const doSendOrder = async () => {
+        await sendOrder(orderDetail.id).then(() => closeModal());
+    };
 
     return(
         <>
@@ -22,32 +23,26 @@ function OrderModalBody({ extraObject, closeModal}){
             <div class="client-address mb-6">
                 <h3 class="text-xl font-semibold mb-2">Adresse du Client :</h3>
                 <p class="text-gray-700">
-                    Nom : Bastien Dupont<br/>
-                    Adresse : 123 Rue de la Liberté, Appartement 4B<br/>
-                    Ville : Metz<br/>
-                    Code Postal : 57000<br/>
-                    Pays : France<br/>
-                    Téléphone : +33 6 12 34 56 78
+                    Nom : {orderDetail.deliveryAddress.firstname} {orderDetail.deliveryAddress.lastname}<br/>
+                    Adresse : {orderDetail.deliveryAddress.street}<br/>
+                    Ville : {orderDetail.deliveryAddress.city}<br/>
+                    Code Postal : {orderDetail.deliveryAddress.zipcode}<br/>
+                    Pays : {orderDetail.deliveryAddress.country}
                 </p>
             </div>
             <div class="order-content mb-6">
                 <h3 class="text-xl font-semibold mb-2">Contenu de la Commande :</h3>
                 <ul class="text-gray-700 list-disc list-inside">
-                    <li>1x Sushi Maki - 12 pièces</li>
-                    <li>2x Ramen au Poulet</li>
-                    <li>1x Tempura de Crevettes</li>
-                    <li>1x Thé Vert Matcha</li>
-                    <li>1x Dessert Mochi - 3 pièces</li>
+                    {orderDetail.cart.products.map((p, k) => <li key={k}>1x {p.name} : {p.price} €</li>)}
+
                 </ul>
             </div>
             <div class="order-total mb-6">
-                <h3 class="text-xl font-semibold mb-2">Total : 45,50€</h3>
+                <h3 class="text-xl font-semibold mb-2">Total : {orderDetail.cart.totalPrice} €</h3>
             </div>
 
         <div className="modal-action mt-12">
-                
-                <button className="btn btn-primary   " onClick={() => console.log('oui')}>Expédier</button>
-
+                <button className="btn btn-primary" onClick={doSendOrder}>Expédier</button>
         </div>
         </>
     )

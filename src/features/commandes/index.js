@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { showNotification } from "../common/headerSlice"
 import TitleCard from "../../components/Cards/TitleCard"
-import { RECENT_TRANSACTIONS } from "../../utils/dummyData"
 import FunnelIcon from '@heroicons/react/24/outline/FunnelIcon'
 import XMarkIcon from '@heroicons/react/24/outline/XMarkIcon'
 import SearchBar from "../../components/Input/SearchBar"
@@ -11,6 +10,10 @@ import TrashIcon from "@heroicons/react/24/outline/TrashIcon";
 import {EyeIcon} from "@heroicons/react/20/solid";
 import {openModal} from "../common/modalSlice";
 import {CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES} from "../../utils/globalConstantUtil";
+import {getCustomerByShop} from "../../service/customerService";
+import {getLeadsContent} from "../clients/leadSlice";
+import {getOrdersByShop} from "../../service/orderService";
+import Avatar from "../../components/Avatar";
 
 const TopSideButtons = ({removeFilter, applyFilter, applySearch}) => {
 
@@ -60,35 +63,41 @@ const TopSideButtons = ({removeFilter, applyFilter, applySearch}) => {
 
 function Commandes(){
 
+    const [orders, setOrders] = useState(null)
 
-    const [trans, setTrans] = useState(RECENT_TRANSACTIONS)
+
+    const fetchOrders = async () => {
+        const response = await getOrdersByShop({shopId : localStorage.getItem('shopId')});
+        setOrders(response);
+    };
+
+    const { isOpen, title, bodyType } = useSelector((state) => state.modal);
+
+    useEffect(() => {
+        fetchOrders().then();
+    }, [isOpen]);
 
     const removeFilter = () => {
-        setTrans(RECENT_TRANSACTIONS)
     }
 
     const applyFilter = (params) => {
-        let filteredTransactions = RECENT_TRANSACTIONS.filter((t) => {return t.location == params})
-        setTrans(filteredTransactions)
+
     }
 
     // Search according to name
     const applySearch = (value) => {
-        let filteredTransactions = RECENT_TRANSACTIONS.filter((t) => {return t.email.toLowerCase().includes(value.toLowerCase()) ||  t.email.toLowerCase().includes(value.toLowerCase())})
-        setTrans(filteredTransactions)
+
     }
 
     const getDummyStatus = (index) => {
-        if(index % 5 === 0)return <div className="badge">Terminé</div>
-        else if(index % 5 === 1)return <div className="badge badge-primary">Expedié</div>
-        else return <div className="badge badge-secondary">A traiter</div>
+        if(index === 'payed')return <div className="badge badge-error">A expedier</div>
+        else return <div className="badge badge-secondary">{index}</div>
     }
 
     const dispatch = useDispatch()
 
-
     const openOrderModal = (index) => {
-        dispatch(openModal({title : "Détails", bodyType : MODAL_BODY_TYPES.ORDER, extraObject : {orderId: index}}))
+        dispatch(openModal({title : "Détails", bodyType : MODAL_BODY_TYPES.ORDER, extraObject : {orderDetail: orders[index]}}))
     }
 
     return(
@@ -96,7 +105,6 @@ function Commandes(){
             
             <TitleCard title="Vos commandes" topMargin="mt-2" TopSideButtons={<TopSideButtons applySearch={applySearch} applyFilter={applyFilter} removeFilter={removeFilter}/>}>
 
-                {/* Team Member list in table format loaded constant */}
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
                     <thead>
@@ -111,14 +119,15 @@ function Commandes(){
                     </thead>
                     <tbody>
                         {
-                            trans.map((l, k) => {
+                            orders?.map((l, k) => {
                                 return(
                                     <tr key={k}>
-                                        <td>{l.name}</td>
-                                        <td>{l.email}</td>
-                                        <td>${l.amount}</td>
-                                        <td>{k % 5 + 1}</td>
-                                        <td>{getDummyStatus(k)}</td>
+                                        <td><Avatar initial={l.userId[0]} size="h-20 w-20" bgColor="bg-primary"
+                                                    textColor="text-white"/></td>
+                                        <td>{l.userId}</td>
+                                        <td>${l.cart.totalPrice}</td>
+                                        <td>{l.cart.products.length}</td>
+                                        <td>{getDummyStatus(l.status)}</td>
                                         <td>
                                             <button className="btn btn-square btn-ghost"
                                                     onClick={() => openOrderModal(k)}><EyeIcon className="w-5"/>
