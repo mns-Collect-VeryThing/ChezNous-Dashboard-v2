@@ -18,7 +18,6 @@ function ProfileSettings(){
     }
 
     const updateFormValue = ({updateType, value}) => {
-        console.log(updateType)
     }
 
     return(

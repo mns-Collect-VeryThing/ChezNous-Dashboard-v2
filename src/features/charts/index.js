@@ -18,8 +18,7 @@ function Charts(){
     }); 
     
     const handleDatePickerValueChange = (newValue) => {
-        console.log("newValue:", newValue); 
-        setDateValue(newValue); 
+        setDateValue(newValue);
     } 
 
     return(

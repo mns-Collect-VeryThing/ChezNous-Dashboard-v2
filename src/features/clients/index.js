@@ -43,7 +43,6 @@ function Clients(){
     }, [])
 
 
-    console.log(customers);
 
     const deleteCurrentLead = (index) => {
         dispatch(openModal({title : "Confirmation", bodyType : MODAL_BODY_TYPES.CONFIRMATION,
