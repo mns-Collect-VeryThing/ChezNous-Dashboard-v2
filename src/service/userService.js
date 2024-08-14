@@ -41,5 +41,21 @@ const getShopByUser = async (userId) => {
     }
 };
 
+const getLogedUser = async () => {
+    const jwtToken = localStorage.getItem('token');
+    try {
+        let shop = localStorage.getItem('shopId');
 
-export { postLogin, getShopByUser };
+        return await axiosInstance.get(`/private/shop/${shop}/owner`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+        });
+    } catch (error) {
+        return { status: 401, message: 'Unauthorized' };
+    }
+};
+
+
+export { postLogin, getShopByUser, getLogedUser };

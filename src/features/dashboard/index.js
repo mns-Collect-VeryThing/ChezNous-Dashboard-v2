@@ -20,7 +20,7 @@ const statsData = [
     {title : "Nouveau clients", value : "25", icon : <UserGroupIcon className='w-8 h-8'/>, description : "Sur le mois en cours"},
     {title : "Nouvelle commande", value : "18", icon : <CreditCardIcon className='w-8 h-8'/>, description : "Sur le mois en cours"},
     {title : "Total commande", value : "450", icon : <CircleStackIcon className='w-8 h-8'/>, description : "Depuis le début"},
-    {title : "Panier moyen", value : "33 €", icon : <ShoppingCartIcon className='w-8 h-8'/>, description : "Depuis le début"},
+    // {title : "Panier moyen", value : "33 €", icon : <ShoppingCartIcon className='w-8 h-8'/>, description : "Depuis le début"},
 ]
 
 
@@ -41,7 +41,7 @@ function Dashboard(){
             <DashboardTopBar updateDashboardPeriod={updateDashboardPeriod}/>
         
         {/** ---------------------- Different stats content 1 ------------------------- */}
-            <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-1 gap-6">
+            <div className="grid lg:grid-cols-3 mt-2 md:grid-cols-2 grid-cols-1 gap-6">
                 {
                     statsData.map((d, k) => {
                         return (

@@ -98,11 +98,11 @@ const routes = [
         icon: <UserIcon className={submenuIconClasses}/>, // icon component
         name: 'Profil', // name that appear in Sidebar
       },
-      {
-        path: '/app/settings-billing',
-        icon: <WalletIcon className={submenuIconClasses}/>,
-        name: 'Facturation',
-      },
+      // {
+      //   path: '/app/settings-billing',
+      //   icon: <WalletIcon className={submenuIconClasses}/>,
+      //   name: 'Facturation',
+      // },
       // {
       //   path: '/app/settings-team', // url
       //   icon: <UsersIcon className={submenuIconClasses}/>, // icon component

@@ -35,7 +35,7 @@ function Login(){
                 const shop = await getShopByUser(decodedToken.username);
                 localStorage.setItem('shopId', shop.data.id);
                 localStorage.setItem('shopName', shop.data.name);
-                window.location.href = '/app/welcome'
+                window.location.href = '/app/dashboard'
             } else {
                 setLoading(false);
                 alert('Invalid login credentials. Please try again.');

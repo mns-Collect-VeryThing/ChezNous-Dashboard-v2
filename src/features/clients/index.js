@@ -59,7 +59,8 @@ function Clients(){
                 <table className="table w-full">
                     <thead>
                     <tr>
-                        <th>Nom</th>
+                        <th></th>
+                        <th>Nom Prénom</th>
                         <th>Email</th>
                         <th>Dernière commande</th>
                         <th></th>
@@ -71,6 +72,7 @@ function Clients(){
                                 return(
                                     <tr key={k}>
                                     <td><Avatar initial={l.email[0]} size="h-20 w-20" bgColor="bg-primary" textColor="text-white" /></td>
+                                    <td>{l.firstname} {l.lastname}</td>
                                     <td>{l.email}</td>
                                     <td>{moment(new Date()).add(-5*(k+2), 'days').format("DD MMM YY")}</td>
                                     {/*<td><button className="btn btn-square btn-ghost" onClick={() => deleteCurrentLead(k)}><TrashIcon className="w-5"/></button></td>*/}
