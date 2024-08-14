@@ -1,13 +1,30 @@
+import {getOrdersByShop, getPayedOrdersByShop} from "../../../service/orderService";
+import {useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+
 function NotificationBodyRightDrawer(){
+
+    const [orders, setOrders] = useState([]);
+
+    const fetchOrders = async () => {
+        const response = await getPayedOrdersByShop({shopId : localStorage.getItem('shopId')});
+        setOrders(response);
+    };
+
+
+    useEffect(() => {
+        fetchOrders().then();
+    }, []);
+
+    console.log(orders);
+
     return(
         <>
              {
-                [...Array(4)].map((_, i) => {
-                    return <div key={i} className={"grid mt-3 card bg-base-200 rounded-box p-3" + (i < 5 ? " bg-blue-100" : "")}>
-                            {i % 2 === 0 ? `Une nouvelle commande à était faites, veuillez l'expédier` : `La commande XXX a était recue `}
-                        </div> 
-                })
-            }
+                 <div className="grid mt-3 card bg-base-200 rounded-box p-3 bg-blue-100">
+                     Il y a {orders.length} commande{orders.length > 1 ? 's' : ''} a éxpédier.
+                 </div>
+             }
         </>
     )
 }

@@ -17,6 +17,8 @@ function OrderModalBody({ extraObject, closeModal}){
         await sendOrder(orderDetail.id).then(() => closeModal());
     };
 
+    console.log(orderDetail)
+
     return(
         <>
             <h2 class="text-2xl font-semibold mb-4">Détails de la Commande</h2>
@@ -42,7 +44,7 @@ function OrderModalBody({ extraObject, closeModal}){
             </div>
 
         <div className="modal-action mt-12">
-                <button className="btn btn-primary" onClick={doSendOrder}>Expédier</button>
+            {orderDetail.status === "payed" ?  <button className="btn btn-primary" onClick={() => doSendOrder()}>Expédier</button> : null}
         </div>
         </>
     )

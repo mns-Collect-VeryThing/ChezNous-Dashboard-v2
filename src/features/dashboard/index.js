@@ -13,21 +13,34 @@ import DashboardTopBar from './components/DashboardTopBar'
 import { useDispatch } from 'react-redux'
 import {showNotification} from '../common/headerSlice'
 import DoughnutChart from './components/DoughnutChart'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import {ShoppingCartIcon} from "@heroicons/react/20/solid";
+import {getCustomerByShop} from "../../service/customerService";
+import {getLeadsContent} from "../clients/leadSlice";
+import {getStatsByShop} from "../../service/shopService";
 
-const statsData = [
-    {title : "Nouveau clients", value : "25", icon : <UserGroupIcon className='w-8 h-8'/>, description : "Sur le mois en cours"},
-    {title : "Nouvelle commande", value : "18", icon : <CreditCardIcon className='w-8 h-8'/>, description : "Sur le mois en cours"},
-    {title : "Total commande", value : "450", icon : <CircleStackIcon className='w-8 h-8'/>, description : "Depuis le début"},
-    // {title : "Panier moyen", value : "33 €", icon : <ShoppingCartIcon className='w-8 h-8'/>, description : "Depuis le début"},
-]
+
 
 
 
 function Dashboard(){
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const [stats, setStats] = useState([])
+
+    const fetchStats = async () => {
+        const response = await getStatsByShop({shopId : localStorage.getItem('shopId')});
+        let tmpStats = [];
+        tmpStats = [...tmpStats, {title : "Total commande", value : response.totalOrders, icon : <CreditCardIcon className='w-8 h-8'/>, description : "Depuis le début"}];
+        setStats(tmpStats);
+    };
+
+    useEffect(() => {
+        fetchStats().then();
+    }, []);
+
+    console.log(stats)
  
 
     const updateDashboardPeriod = (newRange) => {
@@ -43,7 +56,7 @@ function Dashboard(){
         {/** ---------------------- Different stats content 1 ------------------------- */}
             <div className="grid lg:grid-cols-3 mt-2 md:grid-cols-2 grid-cols-1 gap-6">
                 {
-                    statsData.map((d, k) => {
+                    stats.map((d, k) => {
                         return (
                             <DashboardStats key={k} {...d} colorIndex={k}/>
                         )

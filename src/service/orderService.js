@@ -24,6 +24,25 @@ const getOrdersByShop = async (data) => {
     }
 };
 
+const getPayedOrdersByShop = async (data) => {
+    let shop = localStorage.getItem('shopId');
+    const jwtToken = localStorage.getItem('token');
+
+    try {
+        const response =  await axiosInstance.get(`/private/${shop}/order/paid`,  {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching orders', error);
+        throw error;
+    }
+};
+
 const sendOrder = async (orderId) => {
     let shop = localStorage.getItem('shopId');
     const jwtToken = localStorage.getItem('token');
@@ -44,4 +63,4 @@ const sendOrder = async (orderId) => {
 };
 
 
-export { getOrdersByShop, sendOrder };
+export { getOrdersByShop, getPayedOrdersByShop, sendOrder };
