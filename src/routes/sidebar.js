@@ -30,20 +30,20 @@ const routes = [
     name: 'Dashboard',
   },
   {
-    path: '/app/products', // url
+    path: '/app/shops', // url
     icon: <ChartBarIcon className={iconClasses}/>, // icon component
-    name: 'Produits', // name that appear in Sidebar
+    name: 'Shops', // name that appear in Sidebar
   },
-  {
-    path: '/app/clients', // url
-    icon: <InboxArrowDownIcon className={iconClasses}/>, // icon component
-    name: 'Clients', // name that appear in Sidebar
-  },
-  {
-    path: '/app/commandes', // url
-    icon: <CurrencyDollarIcon className={iconClasses}/>, // icon component
-    name: 'Commandes', // name that appear in Sidebar
-  },
+  // {
+  //   path: '/app/clients', // url
+  //   icon: <InboxArrowDownIcon className={iconClasses}/>, // icon component
+  //   name: 'Clients', // name that appear in Sidebar
+  // },
+  // {
+  //   path: '/app/commandes', // url
+  //   icon: <CurrencyDollarIcon className={iconClasses}/>, // icon component
+  //   name: 'Commandes', // name that appear in Sidebar
+  // },
 
   // {
   //   path: '/app/integration', // url
@@ -88,16 +88,16 @@ const routes = [
   //     },
   //   ]
   // },
-  {
-    path: '', //no url needed as this has submenu
-    icon: <Cog6ToothIcon className={`${iconClasses} inline` }/>, // icon component
-    name: 'Parametres', // name that appear in Sidebar
-    submenu : [
-      {
-        path: '/app/settings-profile', //url
-        icon: <UserIcon className={submenuIconClasses}/>, // icon component
-        name: 'Profil', // name that appear in Sidebar
-      },
+  // {
+  //   path: '', //no url needed as this has submenu
+  //   icon: <Cog6ToothIcon className={`${iconClasses} inline` }/>, // icon component
+  //   name: 'Parametres', // name that appear in Sidebar
+  //   submenu : [
+  //     {
+  //       path: '/app/settings-profile', //url
+  //       icon: <UserIcon className={submenuIconClasses}/>, // icon component
+  //       name: 'Profil', // name that appear in Sidebar
+  //     },
       // {
       //   path: '/app/settings-billing',
       //   icon: <WalletIcon className={submenuIconClasses}/>,
@@ -108,8 +108,8 @@ const routes = [
       //   icon: <UsersIcon className={submenuIconClasses}/>, // icon component
       //   name: 'Equipe', // name that appear in Sidebar
       // },
-    ]
-  },
+    // ]
+  // },
   // {
   //   path: '', //no url needed as this has submenu
   //   icon: <DocumentTextIcon className={`${iconClasses} inline` }/>, // icon component
