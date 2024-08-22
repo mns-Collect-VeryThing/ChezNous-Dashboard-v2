@@ -62,11 +62,10 @@ function Shops(){
                                 return(
                                     <tr key={k}>
                                         <td>{l.name}</td>
-                                        <td>{l.price} {l.price}</td>
-                                        <td>{l.date}</td>
+                                        <td>{l.owner?.firstname} {l.owner?.lastname}</td>
+                                        <td>{l.owner?.email}</td>
                                         <td>{l.status}</td>
-                                        <td>{l.theme}</td>
-                                        <td>{l.port}</td>
+                                        <td>300{k}</td>
                                     </tr>
                                 )
                             })

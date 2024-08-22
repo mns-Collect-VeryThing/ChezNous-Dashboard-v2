@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import LandingIntro from './LandingIntro'
 import ErrorText from  '../../components/Typography/ErrorText'
 import InputText from '../../components/Input/InputText'
-import {getShopByUser, postLogin} from "../../service/userService";
+import {checkIfAdmin, postLogin} from "../../service/userService";
 import {jwtDecode} from "jwt-decode";
 
 function Login(){
@@ -32,10 +32,16 @@ function Login(){
                 localStorage.setItem('token', token);
 
                 const decodedToken = jwtDecode(token);
-                const shop = await getShopByUser(decodedToken.username);
-                localStorage.setItem('shopId', shop.data.id);
-                localStorage.setItem('shopName', shop.data.name);
-                window.location.href = '/app/dashboard'
+                const shop = await checkIfAdmin(decodedToken.username);
+                if (shop.data) {
+                    localStorage.setItem('shopId', shop.data.id);
+                    localStorage.setItem('shopName', shop.data.name);
+                    window.location.href = '/app/welcome'
+                } else {
+                    setLoading(false);
+                    alert('Invalid login credentials. Please try again.');
+                }
+
             } else {
                 setLoading(false);
                 alert('Invalid login credentials. Please try again.');

@@ -34,6 +34,14 @@ const routes = [
     path: '/shops', // the url
     component: Shops, // view rendered
   },
+  {
+    path: '/404',
+    component: Page404,
+  },
+  {
+    path: '/blank',
+    component: Blank,
+  },
 ]
 
 export default routes

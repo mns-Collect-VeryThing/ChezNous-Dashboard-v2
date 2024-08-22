@@ -22,12 +22,12 @@ const postLogin = async (data) => {
     }
 };
 
-const getShopByUser = async (userId) => {
+const checkIfAdmin = async (userId) => {
     const jwtToken = localStorage.getItem('token');
 
     try {
         let base64 = btoa(unescape(encodeURIComponent(userId)))
-        return await axiosInstance.get(`/private/shop/user/${base64}`, {
+        return await axiosInstance.get(`/private/dashboard/checkIfAdmin/${base64}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${jwtToken}`
@@ -58,4 +58,4 @@ const getLogedUser = async () => {
 };
 
 
-export { postLogin, getShopByUser, getLogedUser };
+export { postLogin, checkIfAdmin, getLogedUser };

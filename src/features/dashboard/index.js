@@ -19,10 +19,6 @@ import {getCustomerByShop} from "../../service/customerService";
 import {getLeadsContent} from "../clients/leadSlice";
 import {getStatsByShop} from "../../service/shopService";
 
-
-
-
-
 function Dashboard(){
 
     const dispatch = useDispatch();
@@ -32,7 +28,7 @@ function Dashboard(){
     const fetchStats = async () => {
         const response = await getStatsByShop({shopId : localStorage.getItem('shopId')});
         let tmpStats = [];
-        tmpStats = [...tmpStats, {title : "Total commande", value : response.totalOrders, icon : <CreditCardIcon className='w-8 h-8'/>, description : "Depuis le début"}];
+        tmpStats = [...tmpStats, {title : "Nombre de client", value : response.totalOrders, icon : <CreditCardIcon className='w-8 h-8'/>, description : "Depuis le début"}];
         setStats(tmpStats);
     };
 
